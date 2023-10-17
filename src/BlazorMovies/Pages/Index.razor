@@ -1,0 +1,28 @@
+﻿@page "/"
+@using MoviesRpcClient.Protos;
+@inject Movies.MoviesClient _client;
+
+<PageTitle>Movies</PageTitle>
+
+<h1>Movies</h1>
+
+<ul>
+@foreach (var movie in _movies)
+{
+  <li>@movie</li>
+}
+</ul>
+
+@code {
+
+  string[] _movies = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    var request = new ByGenreRequest { Genre = "Comedy" };
+    var list = await _client.ByGenreAsync(request);
+
+    _movies = list.Movies.Select(m => m.Title).ToArray();
+  }
+}
+

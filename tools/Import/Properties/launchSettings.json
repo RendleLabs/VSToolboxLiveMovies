@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Import": {
+      "commandName": "Project",
+      "commandLineArgs": ".\\movies_metadata.csv .\\movies.db",
+      "workingDirectory": "D:\\lab\\Movies\\tools\\Import"
+    }
+  }
+}

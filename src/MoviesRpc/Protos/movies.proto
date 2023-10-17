@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "MoviesRpc.Protos";
+
+service Movies {
+  rpc ByGenre(ByGenreRequest) returns (MovieList) {
+	  option (google.api.http) = {
+		  get: "/api/movies/genre/{genre}"
+	  };
+  }
+  rpc ByGenreStreaming(ByGenreRequest) returns (stream MovieList);
+}
+
+message ByGenreRequest {
+  string genre = 1;
+  google.protobuf.Int32Value page = 2;
+}
+
+enum MovieStatus {
+  NONE = 0;
+  PLANNED = 1;
+  IN_PRODUCTION = 2;
+  POST_PRODUCTION = 3;
+  RELEASED = 4;
+  CANCELLED = 5;
+  RUMORED = 6;
+}
+
+message Movie {
+  int32 id = 1;
+  string title = 2;
+  google.protobuf.StringValue original_title = 3;
+  google.protobuf.StringValue overview = 4;
+  float popularity = 5;
+  google.protobuf.Timestamp release_date = 6;
+  int64 revenue = 7;
+  int32 runtime = 8;
+  MovieStatus status = 9;
+  google.protobuf.StringValue tag_line = 10;
+  float vote_average = 11;
+  int32 vote_count = 12;
+  repeated string genres = 13;
+}
+
+message MovieList {
+  repeated Movie movies = 1;
+}
+
